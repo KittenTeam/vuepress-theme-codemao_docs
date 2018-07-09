@@ -1,0 +1,28 @@
+{
+  "name": "vuepress-theme-codemao_docs",
+  "version": "1.0.0",
+  "description": "codemao docs theme",
+  "main": "./src/Layout.vue",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-eslint": "^8.2.5",
+    "eslint": "^4.15.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-friendly-formatter": "^3.0.0",
+    "eslint-loader": "^1.7.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "eslint-plugin-vue": "^4.0.0"
+  },
+  "dependencies": {
+    "nprogress": "^0.2.0",
+    "prismjs": "^1.15.0"
+  }
+}

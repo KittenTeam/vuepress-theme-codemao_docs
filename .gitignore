@@ -1,0 +1,14 @@
+#mac
+*.DS_Store
+
+
+# build tools
+node_modules/
+
+# logfiles
+*.log
+.idea/
+.vscode/
+
+# dist
+dist
