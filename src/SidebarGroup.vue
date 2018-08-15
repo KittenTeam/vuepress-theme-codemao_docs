@@ -6,11 +6,11 @@
           {{ item.title }}
         </router-link>
       </span>
-      <span v-else>
-        {{ item.title }}
+      <span v-else>{{ item.title }}</span>
+      <span class="arrow" v-if="collapsable" :class="open ? 'down' : 'right'">
       </span>
-      <span class="arrow" v-if="collapsable" :class="open ? 'down' : 'right'"></span>
     </p>
+
     <DropdownTransition>
       <ul class="sidebar-group-items" ref="items" v-if="open || !collapsable">
         <li v-for="child in item.children" :key="child.key">

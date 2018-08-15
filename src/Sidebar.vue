@@ -4,7 +4,7 @@
     <slot name="top" />
     <ul class="sidebar-links" v-if="items.length">
       <li v-for="(item, i) in items" :key="i">
-        <SidebarGroup v-if="item.type === 'group'" :config="sidebar[i]" :item="item" :first="i === 0" :open="i === openGroupIndex" :collapsable="item.collapsable" @toggle="toggleGroup(i)" />
+        <SidebarGroup v-if="item.type === 'group'" :config="sidebar[i]" :item="item" :first="i === 0" :open="i === openGroupIndex" :collapsable="item.collapsable || item.collapsible" @toggle="toggleGroup(i)" />
         <SidebarLink v-else :item="item" />
       </li>
     </ul>
@@ -20,12 +20,15 @@ import { isActive } from './util'
 
 export default {
   components: { SidebarGroup, SidebarLink, NavLinks },
+
   props: ['items'],
+
   data() {
     return {
       openGroupIndex: 0
     }
   },
+
   created() {
     this.refreshIndex()
   },
@@ -36,11 +39,13 @@ export default {
         : this.$site.themeConfig.sidebar
     }
   },
+
   watch: {
     $route() {
       this.refreshIndex()
     }
   },
+
   methods: {
     refreshIndex() {
       const index = resolveOpenGroupIndex(this.$route, this.items)
@@ -48,9 +53,11 @@ export default {
         this.openGroupIndex = index
       }
     },
+
     toggleGroup(index) {
       this.openGroupIndex = index === this.openGroupIndex ? -1 : index
     },
+
     isActive(page) {
       return isActive(this.$route, page.path)
     }

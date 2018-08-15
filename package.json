@@ -1,8 +1,8 @@
 {
   "name": "vuepress-theme-codemao_docs",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "codemao docs theme",
-  "main": "./src/Layout.vue",
+  "main": "./Layout.vue",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,7 +11,7 @@
     "docs"
   ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "babel-eslint": "^8.2.5",
     "eslint": "^4.15.0",
