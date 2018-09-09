@@ -1,5 +1,5 @@
 {
-  "name": "vuepress-theme-codemao_docs",
+  "name": "@kitten-team/vuepress-theme-codemao_docs",
   "version": "1.1.0",
   "description": "codemao docs theme",
   "main": "./Layout.vue",
