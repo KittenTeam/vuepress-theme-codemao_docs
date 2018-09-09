@@ -87,7 +87,7 @@ export default {
     prev () {
       const prev = this.$page.frontmatter.prev
       if (prev === false) {
-        return
+
       } else if (prev) {
         return resolvePage(this.$site.pages, prev, this.$route.path)
       } else {
@@ -98,7 +98,7 @@ export default {
     next () {
       const next = this.$page.frontmatter.next
       if (next === false) {
-        return
+
       } else if (next) {
         return resolvePage(this.$site.pages, next, this.$route.path)
       } else {

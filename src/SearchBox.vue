@@ -23,6 +23,7 @@
         class="suggestion"
         v-for="(s, i) in suggestions"
         :class="{ focused: i === focusIndex }"
+        :key="s.path"
         @mousedown="go(i)"
         @mouseenter="focus(i)"
       >

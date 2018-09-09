@@ -56,7 +56,9 @@ export default {
           text: this.$themeLocaleConfig.selectText || 'Languages',
           items: Object.keys(locales).map(path => {
             const locale = locales[path]
+            /* eslint-disable */
             const text = themeLocales[path] && themeLocales[path].label || locale.lang
+            /* eslint-enable */
             let link
             // Stay on the current page
             if (locale.lang === this.$lang) {

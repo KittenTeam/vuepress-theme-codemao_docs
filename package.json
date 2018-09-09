@@ -4,16 +4,27 @@
   "description": "codemao docs theme",
   "main": "./Layout.vue",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint --fix --ext .js,.vue Layout.vue src/",
+    "prepublishOnly": "conventional-changelog -p angular -r 2 -i CHANGELOG.md -s",
+    "release": "/bin/bash scripts/release.sh"
   },
   "keywords": [
     "vuepress",
     "docs"
   ],
-  "author": "",
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,vue}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
   "license": "MIT",
   "devDependencies": {
     "babel-eslint": "^8.2.5",
+    "conventional-changelog-cli": "^2.0.5",
     "eslint": "^4.15.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-friendly-formatter": "^3.0.0",
@@ -22,10 +33,20 @@
     "eslint-plugin-node": "^5.2.0",
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^3.0.1",
-    "eslint-plugin-vue": "^4.0.0"
+    "eslint-plugin-vue": "^4.0.0",
+    "lint-staged": "^7.2.2",
+    "yorkie": "^2.0.0"
   },
   "dependencies": {
     "nprogress": "^0.2.0",
     "prismjs": "^1.15.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/KittenTeam/vuepress-theme-codemao_docs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KittenTeam/vuepress-theme-codemao_docs"
+  },
+  "homepage": "https://github.com/KittenTeam/vuepress-theme-codemao_docs"
 }

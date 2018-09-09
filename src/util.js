@@ -120,7 +120,7 @@ export function resolveSidebarItems (page, route, site, localePath) {
     return resolveHeaders(page)
   }
 
-  console.log(themeConfig.sidebar);
+  console.log(themeConfig.sidebar)
   const sidebarConfig = localeConfig.sidebar || themeConfig.sidebar
   if (!sidebarConfig) {
     return []

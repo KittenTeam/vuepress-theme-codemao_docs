@@ -31,6 +31,7 @@
       <div
         class="feature"
         v-for="feature in data.features"
+        :key="feature.title"
       >
         <h2>{{ feature.title }}</h2>
         <p>{{ feature.details }}</p>
