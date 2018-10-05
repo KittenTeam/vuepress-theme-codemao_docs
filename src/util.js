@@ -1,34 +1,36 @@
+import TWEEN from '@tweenjs/tween.js'
+
 export const hashRE = /#.*$/
 export const extRE = /\.(md|html)$/
 export const endingSlashRE = /\/$/
 export const outboundRE = /^(https?:|mailto:|tel:)/
 
-export function normalize (path) {
+export function normalize(path) {
   return decodeURI(path)
     .replace(hashRE, '')
     .replace(extRE, '')
 }
 
-export function getHash (path) {
+export function getHash(path) {
   const match = path.match(hashRE)
   if (match) {
     return match[0]
   }
 }
 
-export function isExternal (path) {
+export function isExternal(path) {
   return outboundRE.test(path)
 }
 
-export function isMailto (path) {
+export function isMailto(path) {
   return /^mailto:/.test(path)
 }
 
-export function isTel (path) {
+export function isTel(path) {
   return /^tel:/.test(path)
 }
 
-export function ensureExt (path) {
+export function ensureExt(path) {
   if (isExternal(path)) {
     return path
   }
@@ -42,7 +44,7 @@ export function ensureExt (path) {
   return normalized + '.html' + hash
 }
 
-export function isActive (route, path) {
+export function isActive(route, path) {
   const routeHash = route.hash
   const linkHash = getHash(path)
   if (linkHash && routeHash !== linkHash) {
@@ -53,7 +55,7 @@ export function isActive (route, path) {
   return routePath === pagePath
 }
 
-export function resolvePage (pages, rawPath, base) {
+export function resolvePage(pages, rawPath, base) {
   if (base) {
     rawPath = resolvePath(rawPath, base)
   }
@@ -66,11 +68,13 @@ export function resolvePage (pages, rawPath, base) {
       })
     }
   }
-  console.error(`[vuepress] No matching page found for sidebar item "${rawPath}"`)
+  console.error(
+    `[vuepress] No matching page found for sidebar item "${rawPath}"`
+  )
   return {}
 }
 
-function resolvePath (relative, base, append) {
+function resolvePath(relative, base, append) {
   const firstChar = relative.charAt(0)
   if (firstChar === '/') {
     return relative
@@ -108,14 +112,16 @@ function resolvePath (relative, base, append) {
   return stack.join('/')
 }
 
-export function resolveSidebarItems (page, route, site, localePath) {
+export function resolveSidebarItems(page, route, site, localePath) {
   const { pages, themeConfig } = site
 
-  const localeConfig = localePath && themeConfig.locales
-    ? themeConfig.locales[localePath] || themeConfig
-    : themeConfig
+  const localeConfig =
+    localePath && themeConfig.locales
+      ? themeConfig.locales[localePath] || themeConfig
+      : themeConfig
 
-  const pageSidebarConfig = page.frontmatter.sidebar || localeConfig.sidebar || themeConfig.sidebar
+  const pageSidebarConfig =
+    page.frontmatter.sidebar || localeConfig.sidebar || themeConfig.sidebar
   if (pageSidebarConfig === 'auto') {
     return resolveHeaders(page)
   }
@@ -126,29 +132,29 @@ export function resolveSidebarItems (page, route, site, localePath) {
     return []
   } else {
     const { base, config } = resolveMatchingConfig(route, sidebarConfig)
-    return config
-      ? config.map(item => resolveItem(item, pages, base))
-      : []
+    return config ? config.map(item => resolveItem(item, pages, base)) : []
   }
 }
 
-function resolveHeaders (page) {
+function resolveHeaders(page) {
   const headers = groupHeaders(page.headers || [])
-  return [{
-    type: 'group',
-    collapsable: false,
-    title: page.title,
-    children: headers.map(h => ({
-      type: 'auto',
-      title: h.title,
-      basePath: page.path,
-      path: page.path + '#' + h.slug,
-      children: h.children || []
-    }))
-  }]
+  return [
+    {
+      type: 'group',
+      collapsable: false,
+      title: page.title,
+      children: headers.map(h => ({
+        type: 'auto',
+        title: h.title,
+        basePath: page.path,
+        path: page.path + '#' + h.slug,
+        children: h.children || []
+      }))
+    }
+  ]
 }
 
-export function groupHeaders (headers) {
+export function groupHeaders(headers) {
   // group h3s under h2
   headers = headers.map(h => Object.assign({}, h))
   let lastH2
@@ -156,19 +162,19 @@ export function groupHeaders (headers) {
     if (h.level === 2) {
       lastH2 = h
     } else if (lastH2) {
-      (lastH2.children || (lastH2.children = [])).push(h)
+      ;(lastH2.children || (lastH2.children = [])).push(h)
     }
   })
   return headers.filter(h => h.level === 2)
 }
 
-export function resolveNavLinkItem (linkItem) {
+export function resolveNavLinkItem(linkItem) {
   return Object.assign(linkItem, {
     type: linkItem.items && linkItem.items.length ? 'links' : 'link'
   })
 }
 
-export function resolveMatchingConfig (route, config) {
+export function resolveMatchingConfig(route, config) {
   if (Array.isArray(config)) {
     return {
       base: '/',
@@ -186,13 +192,11 @@ export function resolveMatchingConfig (route, config) {
   return {}
 }
 
-function ensureEndingSlash (path) {
-  return /(\.html|\/)$/.test(path)
-    ? path
-    : path + '/'
+function ensureEndingSlash(path) {
+  return /(\.html|\/)$/.test(path) ? path : path + '/'
 }
 
-function resolveItem (item, pages, base, isNested) {
+function resolveItem(item, pages, base, isNested) {
   if (typeof item === 'string') {
     return resolvePage(pages, item, base)
   } else if (Array.isArray(item)) {
@@ -203,7 +207,7 @@ function resolveItem (item, pages, base, isNested) {
     if (isNested) {
       console.error(
         '[vuepress] Nested sidebar groups are not supported. ' +
-        'Consider using navbar + categories instead.'
+          'Consider using navbar + categories instead.'
       )
     }
     const children = item.children || []
@@ -212,6 +216,54 @@ function resolveItem (item, pages, base, isNested) {
       title: item.title,
       children: children.map(child => resolveItem(child, pages, base, true)),
       collapsable: item.collapsable !== false
+    }
+  }
+}
+
+export function getElementTop(element) {
+  let actualTop = element.offsetTop
+  let current = element.offsetParent
+
+  while (current !== null) {
+    actualTop += current.offsetTop
+    current = current.offsetParent
+  }
+
+  return actualTop
+}
+
+export function scrollTop({ top = 0, el, duration = 500 } = {}) {
+  function animate(time) {
+    if (TWEEN.update(time)) {
+      requestAnimationFrame(animate)
+    }
+  }
+  const startTop = el
+    ? el.scrollTop
+    : document.documentElement.scrollTop || document.body.scrollTop
+  const coords = { top: startTop }
+  new TWEEN.Tween(coords)
+    .to({ top }, duration)
+    .easing(TWEEN.Easing.Quadratic.Out)
+    .onUpdate(function() {
+      if (el) {
+        el.scrollTop = coords.top
+      } else {
+        document.body.scrollTop = coords.top
+        document.documentElement.scrollTop = coords.top
+      }
+    })
+    .start()
+  animate()
+}
+
+export const throttle = (cb, time = 100) => {
+  let timer = Date.now()
+  const self = this
+  return function (...arg) {
+    if (Date.now() - timer > time) {
+      cb.apply(self, arg)
+      timer = Date.now()
     }
   }
 }

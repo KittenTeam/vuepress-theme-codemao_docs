@@ -11,25 +11,22 @@
       @blur="focused = false"
       @keyup.enter="go(focusIndex)"
       @keyup.up="onUp"
-      @keyup.down="onDown"
-    >
-    <ul
-      class="suggestions"
+      @keyup.down="onDown">
+    <ul class="suggestions"
       v-if="showSuggestions"
       :class="{ 'align-right': alignRight }"
-      @mouseleave="unfocus"
-    >
-      <li
-        class="suggestion"
+      @mouseleave="unfocus">
+      <li class="suggestion"
         v-for="(s, i) in suggestions"
         :class="{ focused: i === focusIndex }"
         :key="s.path"
         @mousedown="go(i)"
-        @mouseenter="focus(i)"
-      >
-        <a :href="s.path" @click.prevent>
+        @mouseenter="focus(i)">
+        <a :href="s.path"
+          @click.prevent>
           <span class="page-title">{{ s.title || s.path }}</span>
-          <span v-if="s.header" class="header">&gt; {{ s.header.title }}</span>
+          <span v-if="s.header"
+            class="header">&gt; {{ s.header.title }}</span>
         </a>
       </li>
     </ul>
@@ -170,8 +167,8 @@ export default {
     line-height 2rem
     padding 0 0.5rem 0 2rem
     outline none
-    transition all .2s ease
-    background #fff url(./search.svg) 0.6rem 0.5rem no-repeat
+    transition all 0.2s ease
+    background #fff url('./search.svg') 0.6rem 0.5rem no-repeat
     background-size 1rem
     &:focus
       cursor auto
@@ -204,7 +201,6 @@ export default {
       background-color #f3f4f5
       a
         color $accentColor
-
 @media (max-width: $MQNarrow)
   .search-box
     input
@@ -216,12 +212,10 @@ export default {
         cursor text
         left 0
         width 10rem
-
 @media (max-width: $MQNarrow) and (min-width: $MQMobile)
   .search-box
     .suggestions
       left 0
-
 @media (max-width: $MQMobile)
   .search-box
     margin-right 0
@@ -229,7 +223,6 @@ export default {
       left 1rem
     .suggestions
       right 0
-
 @media (max-width: $MQMobileNarrow)
   .search-box
     .suggestions

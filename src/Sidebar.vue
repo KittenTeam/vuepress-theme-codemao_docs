@@ -1,11 +1,20 @@
 <template>
   <div class="sidebar">
-    <NavLinks/>
+    <NavLinks />
     <slot name="top" />
-    <ul class="sidebar-links" v-if="items.length">
-      <li v-for="(item, i) in items" :key="i">
-        <SidebarGroup v-if="item.type === 'group'" :config="sidebar[i]" :item="item" :first="i === 0" :open="i === openGroupIndex" :collapsable="item.collapsable || item.collapsible" @toggle="toggleGroup(i)" />
-        <SidebarLink v-else :item="item" />
+    <ul class="sidebar-links"
+      v-if="items.length">
+      <li v-for="(item, i) in items"
+        :key="i">
+        <SidebarGroup v-if="item.type === 'group'"
+          :config="sidebar[i]"
+          :item="item"
+          :first="i === 0"
+          :open="i === openGroupIndex"
+          :collapsable="item.collapsable || item.collapsible"
+          @toggle="toggleGroup(i)" />
+        <SidebarLink v-else
+          :item="item" />
       </li>
     </ul>
     <slot name="bottom" />

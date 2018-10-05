@@ -1,34 +1,24 @@
 <template>
-  <nav
-    class="nav-links"
-    v-if="userLinks.length || repoLink"
-  >
+  <nav class="nav-links"
+    v-if="userLinks.length || repoLink">
     <!-- user links -->
-    <div
-      class="nav-item"
+    <div class="nav-item"
       v-for="item in userLinks"
-      :key="item.link"
-    >
-      <DropdownLink
-        v-if="item.type === 'links'"
-        :item="item"
-      />
-      <NavLink
-        v-else
-        :item="item"
-      />
+      :key="item.link">
+      <DropdownLink v-if="item.type === 'links'"
+        :item="item" />
+      <NavLink v-else
+        :item="item" />
     </div>
 
     <!-- repo link -->
-    <a
-      v-if="repoLink"
+    <a v-if="repoLink"
       :href="repoLink"
       class="repo-link"
       target="_blank"
-      rel="noopener noreferrer"
-    >
+      rel="noopener noreferrer">
       {{ repoLabel }}
-      <OutboundLink/>
+      <OutboundLink />
     </a>
   </nav>
 </template>
@@ -136,12 +126,10 @@ export default {
       margin-left 0
   .repo-link
     margin-left 1.5rem
-
 @media (max-width: $MQMobile)
   .nav-links
     .nav-item, .repo-link
       margin-left 0
-
 @media (min-width: $MQMobile)
   .nav-links a
     &:hover, &.router-link-active

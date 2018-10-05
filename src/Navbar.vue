@@ -1,37 +1,29 @@
 <template>
   <header class="navbar">
-    <SidebarButton @toggle-sidebar="$emit('toggle-sidebar')"/>
+    <SidebarButton @toggle-sidebar="$emit('toggle-sidebar')" />
 
-    <router-link
-      :to="$localePath"
-      class="home-link"
-    >
+    <router-link :to="$localePath"
+      class="home-link">
       <img
         class="logo"
         v-if="$site.themeConfig.logo"
         :src="$withBase($site.themeConfig.logo)"
         :alt="$siteTitle"
       >
-      <span
-        ref="siteName"
+      <span ref="siteName"
         class="site-name"
         v-if="$siteTitle"
-        :class="{ 'can-hide': $site.themeConfig.logo }"
-      >{{ $siteTitle }}</span>
+        :class="{ 'can-hide': $site.themeConfig.logo }">{{ $siteTitle }}</span>
     </router-link>
 
-    <div
-      class="links"
+    <div class="links"
       :style="{
         'max-width': linksWrapMaxWidth + 'px'
-      }"
-    >
-      <AlgoliaSearchBox
-        v-if="isAlgoliaSearch"
-        :options="algolia"
-      />
-      <SearchBox v-else-if="$site.themeConfig.search !== false"/>
-      <NavLinks class="can-hide"/>
+      }">
+      <AlgoliaSearchBox v-if="isAlgoliaSearch"
+        :options="algolia" />
+      <SearchBox v-else-if="$site.themeConfig.search !== false" />
+      <NavLinks class="can-hide" />
     </div>
   </header>
 </template>
@@ -92,7 +84,6 @@ function css (el, property) {
 
 $navbar-vertical-padding = 0.7rem
 $navbar-horizontal-padding = 1.5rem
-
 .navbar
   padding $navbar-vertical-padding $navbar-horizontal-padding
   line-height $navbarHeight - 1.4rem
@@ -120,11 +111,10 @@ $navbar-horizontal-padding = 1.5rem
     top $navbar-vertical-padding
     display flex
     .search-box
-      flex: 0 0 auto
+      flex 0 0 auto
       vertical-align top
     .nav-links
       flex 1
-
 @media (max-width: $MQMobile)
   .navbar
     padding-left 4rem

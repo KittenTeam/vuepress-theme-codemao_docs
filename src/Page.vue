@@ -1,55 +1,42 @@
 <template>
   <div class="page">
-    <slot name="top"/>
+    <slot name="top" />
 
-    <Content :custom="false"/>
+    <Content :custom="false" />
 
     <div class="page-edit">
-      <div
-        class="edit-link"
-        v-if="editLink"
-      >
-        <a
-          :href="editLink"
+      <div class="edit-link"
+        v-if="editLink">
+        <a :href="editLink"
           target="_blank"
-          rel="noopener noreferrer"
-        >{{ editLinkText }}</a>
-        <OutboundLink/>
+          rel="noopener noreferrer">{{ editLinkText }}</a>
+        <OutboundLink />
       </div>
 
-      <div
-        class="last-updated"
-        v-if="lastUpdated"
-      >
+      <div class="last-updated"
+        v-if="lastUpdated">
         <span class="prefix">{{ lastUpdatedText }}: </span>
         <span class="time">{{ lastUpdated }}</span>
       </div>
     </div>
 
-    <div class="page-nav" v-if="prev || next">
+    <div class="page-nav"
+      v-if="prev || next">
       <p class="inner">
-        <span
-          v-if="prev"
-          class="prev"
-        >
+        <span v-if="prev"
+          class="prev">
           ←
-          <router-link
-            v-if="prev"
+          <router-link v-if="prev"
             class="prev"
-            :to="prev.path"
-          >
+            :to="prev.path">
             {{ prev.title || prev.path }}
           </router-link>
         </span>
 
-        <span
-          v-if="next"
-          class="next"
-        >
-          <router-link
-            v-if="next"
-            :to="next.path"
-          >
+        <span v-if="next"
+          class="next">
+          <router-link v-if="next"
+            :to="next.path">
             {{ next.title || next.path }}
           </router-link>
           →
@@ -57,14 +44,20 @@
       </p>
     </div>
 
-    <slot name="bottom"/>
+    <fixed-right />
+
+    <slot name="bottom" />
   </div>
 </template>
 
 <script>
+import FixedRight from './FixedRight'
 import { resolvePage, normalize, outboundRE, endingSlashRE } from './util'
 
 export default {
+  components: {
+    FixedRight
+  },
   props: ['sidebarItems'],
 
   computed: {
@@ -200,7 +193,6 @@ function find (page, items, offset) {
 
 .page
   padding-bottom 2rem
-
 .page-edit
   @extend $wrapper
   padding-top 1rem
@@ -220,7 +212,6 @@ function find (page, items, offset) {
     .time
       font-weight 400
       color #aaa
-
 .page-nav
   @extend $wrapper
   padding-top 1rem
@@ -233,14 +224,12 @@ function find (page, items, offset) {
     overflow auto // clear float
   .next
     float right
-
 @media (max-width: $MQMobile)
   .page-edit
     .edit-link
-      margin-bottom .5rem
+      margin-bottom 0.5rem
     .last-updated
-      font-size .8em
+      font-size 0.8em
       float none
       text-align left
-
 </style>

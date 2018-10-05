@@ -1,9 +1,7 @@
 <template>
   <transition name="sw-update-popup">
-    <div
-      v-if="enabled"
-      class="sw-update-popup"
-    >
+    <div v-if="enabled"
+      class="sw-update-popup">
       {{message}}<br>
       <button @click="reload">{{buttonText}}</button>
     </div>
@@ -71,14 +69,11 @@ export default {
   background #fff
   box-shadow 0 4px 16px rgba(0, 0, 0, 0.5)
   text-align center
-
   button
     margin-top 0.5em
     padding 0.25em 2em
-
 .sw-update-popup-enter-active, .sw-update-popup-leave-active
   transition opacity 0.3s, transform 0.3s
-
 .sw-update-popup-enter, .sw-update-popup-leave-to
   opacity 0
   transform translate(0, 50%) scale(0.5)

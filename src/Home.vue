@@ -1,11 +1,7 @@
 <template>
   <div class="home">
     <div class="hero">
-      <img
-        v-if="data.heroImage"
-        :src="$withBase(data.heroImage)"
-        alt="hero"
-      >
+      <img v-if="data.heroImage" :src="$withBase(data.heroImage)" alt="hero">
 
       <h1>{{ data.heroText || $title || 'Hello' }}</h1>
 
@@ -13,37 +9,27 @@
         {{ data.tagline || $description || 'Welcome to your VuePress site' }}
       </p>
 
-      <p
-        class="action"
-        v-if="data.actionText && data.actionLink"
-      >
-        <NavLink
-          class="action-button"
-          :item="actionLink"
-        />
+      <p class="action"
+        v-if="data.actionText && data.actionLink">
+        <NavLink class="action-button"
+          :item="actionLink" />
       </p>
     </div>
 
-    <div
-      class="features"
-      v-if="data.features && data.features.length"
-    >
-      <div
-        class="feature"
+    <div class="features"
+      v-if="data.features && data.features.length">
+      <div class="feature"
         v-for="feature in data.features"
-        :key="feature.title"
-      >
+        :key="feature.title">
         <h2>{{ feature.title }}</h2>
         <p>{{ feature.details }}</p>
       </div>
     </div>
 
-    <Content custom/>
+    <Content custom />
 
-    <div
-      class="footer"
-      v-if="data.footer"
-    >
+    <div class="footer"
+      v-if="data.footer">
       {{ data.footer }}
     </div>
   </div>
@@ -99,7 +85,7 @@ export default {
       background-color $accentColor
       padding 0.8rem 1.6rem
       border-radius 4px
-      transition background-color .1s ease
+      transition background-color 0.1s ease
       box-sizing border-box
       border-bottom 1px solid darken($accentColor, 10%)
       &:hover
@@ -130,7 +116,6 @@ export default {
     border-top 1px solid $borderColor
     text-align center
     color lighten($textColor, 25%)
-
 @media (max-width: $MQMobile)
   .home
     .features
@@ -138,7 +123,6 @@ export default {
     .feature
       max-width 100%
       padding 0 2.5rem
-
 @media (max-width: $MQMobileNarrow)
   .home
     padding-left 1.5rem
