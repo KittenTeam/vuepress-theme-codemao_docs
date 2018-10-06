@@ -2,11 +2,11 @@
   <transition name="fade">
     <div class="fixed-right"
       v-show="show">
-      <div class="table-of-contents">
+      <div v-if="useScrollNav" class="table-of-contents">
         <ul class="main-list">
           <li>
             <a href="javascript:;">{{ title }}</a>
-            <ul class="sub-list">
+            <ul ref="subScrollList" class="sub-list">
               <li v-for="v of level2data"
                 :class="{ active: `#${v.slug}` === currentAnchor }"
                 :key="v.title">
@@ -35,7 +35,14 @@ export default {
     }
   },
   computed: {
+    useScrollNav() {
+      return this.$page.frontmatter.useScrollNav ||
+        this.$themeLocaleConfig.useScrollNav ||
+        this.$site.themeConfig.useScrollNav ||
+        false
+    },
     level2data() {
+      if (!this.$page.headers) return []
       return this.$page.headers.filter(v => v.level === 2)
     },
     title() {
@@ -43,7 +50,7 @@ export default {
     }
   },
   mounted() {
-    const hanlderScroll = throttle(this.hanlderScroll, 200)
+    const hanlderScroll = throttle(this.hanlderScroll, 300)
     window.addEventListener('scroll', hanlderScroll)
     this.$once('hook:beforeDestroy', () => {
       window.removeEventListener('scroll', hanlderScroll)
@@ -51,8 +58,17 @@ export default {
   },
   methods: {
     hanlderScroll() {
+      if (this.lock) return
+      this.heartBeat()
+      if (this.lastBeatTime) clearTimeout(this.lastBeatTime)
+      this.lastBeatTime = setTimeout(this.heartBeat, 300)
+    },
+    heartBeat() {
       this.shouldShow()
-      this.setActiveHash()
+      if (this.useScrollNav) {
+        this.subScrollFix()
+        this.setActiveHash()
+      }
     },
     shouldShow(e) {
       const scrollTop = Math.max(
@@ -78,7 +94,7 @@ export default {
 
         /* eslint-disable */
         const isActive = i === 0 && scrollTop === 0 ||
-        (scrollTop >= anchor.parentElement.offsetTop + 10 &&
+        (scrollTop >= anchor.parentElement.offsetTop &&
         (!nextAnchor || scrollTop < nextAnchor.parentElement.offsetTop - 10))
         /* eslint-enable */
         if (isActive) {
@@ -87,16 +103,33 @@ export default {
         }
       }
     },
+    subScrollFix() {
+      const subScrollList = this.$refs.subScrollList
+      const active = subScrollList ? subScrollList.querySelector('.active') : null
+      if (active) {
+        const offsetTop = active.offsetTop
+        scrollTop({ el: subScrollList, top: offsetTop > 150 ? offsetTop - 150 : 0 })
+      }
+    },
     scrollTop,
     findAnchor(anchor) {
       return document.getElementById(decodeURI(anchor))
     },
     scrollToAnchor(anchor) {
+      this.lock = true
       const el = this.findAnchor(anchor)
       if (el) {
         const top = getElementTop(el)
-        scrollTop({ top })
+        scrollTop({ top: top + 10 })
       }
+      setTimeout(() => {
+        this.lock = false
+        this.hanlderScroll()
+      }, 600)
+    },
+    reset() {
+      this.show = false
+      this.currentAnchor = ''
     }
   }
 }
