@@ -37,10 +37,8 @@
     "lint-staged": "^7.2.2",
     "yorkie": "^2.0.0"
   },
-  "dependencies": {
-    "@tweenjs/tween.js": "^17.2.0",
-    "nprogress": "^0.2.0",
-    "prismjs": "^1.15.0"
+  "peerDependencies": {
+    "@tweenjs/tween.js": "^17.2.0"
   },
   "bugs": {
     "url": "https://github.com/KittenTeam/vuepress-theme-codemao_docs/issues"
@@ -49,5 +47,8 @@
     "type": "git",
     "url": "https://github.com/KittenTeam/vuepress-theme-codemao_docs"
   },
-  "homepage": "https://github.com/KittenTeam/vuepress-theme-codemao_docs"
+  "homepage": "https://github.com/KittenTeam/vuepress-theme-codemao_docs",
+  "dependencies": {
+    "@tweenjs/tween.js": "^17.2.0"
+  }
 }

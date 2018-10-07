@@ -2,11 +2,13 @@
   <transition name="fade">
     <div class="fixed-right"
       v-show="show">
-      <div v-if="useScrollNav" class="table-of-contents">
+      <div v-if="useScrollNav"
+        class="table-of-contents">
         <ul class="main-list">
           <li>
             <a href="javascript:;">{{ title }}</a>
-            <ul ref="subScrollList" class="sub-list">
+            <ul ref="subScrollList"
+              class="sub-list">
               <li v-for="v of level2data"
                 :class="{ active: `#${v.slug}` === currentAnchor }"
                 :key="v.title">
@@ -36,10 +38,12 @@ export default {
   },
   computed: {
     useScrollNav() {
-      return this.$page.frontmatter.useScrollNav ||
-        this.$themeLocaleConfig.useScrollNav ||
-        this.$site.themeConfig.useScrollNav ||
+      return merge_default(
+        this.$page.frontmatter.useScrollNav,
+        this.$themeLocaleConfig.useScrollNav,
+        this.$site.themeConfig.useScrollNav,
         false
+      )
     },
     level2data() {
       if (!this.$page.headers) return []
@@ -130,6 +134,13 @@ export default {
     reset() {
       this.show = false
       this.currentAnchor = ''
+    }
+  }
+}
+function merge_default(...params) {
+  for (const param of params) {
+    if (param !== void 0) {
+      return !!param
     }
   }
 }
