@@ -7,7 +7,7 @@
       <li v-for="(item, i) in items"
         :key="i">
         <SidebarGroup v-if="item.type === 'group'"
-          :config="sidebar[i]"
+          :config="sidebar[i] || {}"
           :item="item"
           :first="i === 0"
           :open="i === openGroupIndex"
