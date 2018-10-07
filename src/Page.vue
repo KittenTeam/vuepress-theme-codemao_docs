@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import FixedRight from './FixedRight'
+import FixedRight from './FixedRight.vue'
 import { resolvePage, normalize, outboundRE, endingSlashRE } from './util'
 
 export default {
